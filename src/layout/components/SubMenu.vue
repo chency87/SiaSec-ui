@@ -1,31 +1,27 @@
 <template>
-  <div>
+  <!-- <el-submenu index="1-4">
+    <span slot="title">选项4</span>
+    <el-menu-item index="1-4-1">选项1</el-menu-item>
+  </el-submenu> -->
 
-    <el-submenu :index="resolvePath(item.path)"
-                popper-append-to-body>
-      <template slot="title">
-        <i class="el-icon-setting"></i>
-        <span>{{item.meta.title}}</span>
-        <span>---------------</span>
-        <span>{{resolvePath(item.path)}}</span>
-      </template>
+  <el-submenu :index="resolvePath(item.path)">
+    <template slot="title">
+      <i :class="'el-icon-'+item.meta.icon"></i>
+      <span slot="title">{{item.meta.title}}</span>
+    </template>
 
-      <el-menu-item-group>
-
-        <template v-for="itemX in item.children">
-          <sub-menu v-if="itemX.children && itemX.children.length > 1 "
-                    :item="itemX"
-                    :base-path="item.path"
-                    :key="itemX.path" />
-          <menu-item v-else
-                     :path="itemX.path"
-                     :title="itemX.meta.title"
-                     :key="itemX.path" />
-        </template>
-      </el-menu-item-group>
-
-    </el-submenu>
-  </div>
+    <template v-for="itemX in item.children">
+      <sub-menu v-if="itemX.children && itemX.children.length > 1 "
+                :item="itemX"
+                :base-path="item.path"
+                :key="itemX.path" />
+      <menu-item v-else
+                 :path="item.path +'/'+ itemX.path"
+                 :title="itemX.meta.title"
+                 :icon="itemX.meta.icon"
+                 :key="itemX.path" />
+    </template>
+  </el-submenu>
 </template>
 
 <script>
@@ -57,20 +53,5 @@ export default {
 };
 </script>
 
-<style scoped>
-.title {
-  padding: 20px;
-  color: rgb(153, 153, 153);
-}
-.title:hover {
-  background: rgb(244, 244, 244);
-}
-.children {
-  padding-left: 20px;
-  background: rgb(244, 244, 244);
-}
-.icon {
-  float: right;
-  color: #999999;
-}
+<style >
 </style>

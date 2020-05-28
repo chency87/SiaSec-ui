@@ -12,71 +12,89 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'Home',
     component: Layout,
-    meta: { title: 'Home', icon: 'menu' },
+    meta: { title: '网关状态', icon: 'menu' },
     children: [{
       path: '',
-      name: 'Home',
       // component: () => import('@/views/About.vue'),
-      component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue'),
-      meta: { title: 'Home', icon: 'menu' },
+      component: () => import(/* webpackChunkName: "about" */ '@/views/GatewayStatus.vue'),
+      meta: { title: '', icon: 'menu' },
     }],
   },
   {
-    path: '/about',
+    path: '/device',
     component: Layout,
-    meta: { title: 'Abu', icon: 'el-icon-setting' },
+    meta: { title: '设备管理', icon: 'mobile-phone' },
+    children: [{
+      path: '',
+      // component: () => import('@/views/About.vue'),
+      component: () => import(/* webpackChunkName: "about" */ '@/views/DeviceManage.vue'),
+      meta: { title: '', icon: 'menu' },
+    }],
+  },
+  {
+    path: '/user',
+    component: Layout,
+    meta: { title: '用户管理', icon: 's-custom' },
+    children: [{
+      path: '',
+      // component: () => import('@/views/About.vue'),
+      component: () => import(/* webpackChunkName: "about" */ '@/views/UserManage.vue'),
+      meta: { title: '', icon: 'menu' },
+    }],
+  },
+  {
+    path: '/network',
+    component: Layout,
+    meta: { title: '网络管理', icon: 'discover' },
+    children: [{
+      path: '',
+      // component: () => import('@/views/About.vue'),
+      component: () => import(/* webpackChunkName: "about" */ '@/views/NetworkManage.vue'),
+      meta: { title: '', icon: 'menu' },
+    }],
+  },
+  {
+    path: '/plugin',
+    component: Layout,
+    meta: { title: '协议插件管理', icon: 's-management' },
     children: [
       {
-        path: 'ab',
-        name: 'About',
-        component: () => import('@/views/About.vue'),
-        meta: { title: 'Form', icon: 'setting' },
+        path: 'acquire',
+        component: () => import('@/views/ProtocolAdapter.vue'),
+        meta: { title: '解析插件', icon: 'connection' },
       },
       {
-        path: 'home',
-        name: 'de',
-        component: () => import('@/views/About.vue'),
-        meta: { title: 'de', icon: 'document' },
+        path: 'transport',
+        component: () => import('@/views/ProtocolTransfer.vue'),
+        meta: { title: '转发插件', icon: 'guide' },
       },
     ],
-  },
-  // {
-  //   path: '/home',
-  //   name: 'Home',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: '/index',
-  //       // name: 'Form',
-  //       component: Home,
-  //       // meta: { title: 'Form', icon: 'form' },
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: '/foo',
-  //   name: 'Home',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'about',
-  //       // name: 'Form',
-  //       component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  //       // meta: { title: 'Form', icon: 'form' },
-  //     },
-  //   ],
 
-  // },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  // },
+  },
+  {
+    path: '/audit',
+    component: Layout,
+    meta: { title: '审计日志', icon: 's-data' },
+    children: [{
+      path: '',
+      // component: () => import('@/views/About.vue'),
+      component: () => import(/* webpackChunkName: "about" */ '@/views/AuditLog.vue'),
+      meta: { title: '', icon: 'menu' },
+    }],
+  },
+  {
+    path: '/setting',
+    component: Layout,
+    meta: { title: '设置', icon: 'setting' },
+    children: [{
+      path: '',
+      // component: () => import('@/views/About.vue'),
+      component: () => import(/* webpackChunkName: "about" */ '@/views/Settings.vue'),
+      meta: { title: '', icon: 'menu' },
+    }],
+  },
+
 ];
 
 const router = new VueRouter({
