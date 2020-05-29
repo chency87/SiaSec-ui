@@ -26,11 +26,11 @@
         <div v-for="item in routes"
              :key="item.path"
              class="siderbar-menu">
-          <sub-menu v-if="item.children && item.children.length > 1 "
+          <sub-menu v-if="item.meta.hiden!=true && item.children && item.children.length > 1 "
                     :item="item"
                     :base-path="item.path"
                     :key="item.path" />
-          <menu-item v-else
+          <menu-item v-else-if="item.meta.hiden!=true"
                      :path="item.path"
                      :title="item.meta.title"
                      :icon="item.meta.icon"
@@ -62,7 +62,7 @@
           </el-row>
 
         </el-header>
-        <el-main>
+        <el-main class="app-container">
           <app-main></app-main>
           <!-- <router-view></router-view> -->
         </el-main>

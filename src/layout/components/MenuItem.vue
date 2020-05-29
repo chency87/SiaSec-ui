@@ -4,9 +4,7 @@
       <i :class="'el-icon-'+icon"></i>
       <span slot="title">{{ title }}</span>
     </el-menu-item>
-
   </router-link>
-
 </template>
 
 <script>
