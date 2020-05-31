@@ -12,16 +12,16 @@ Vue.use(VueRouter);
 
 const routes = [{
   path: '/',
+  name: 'login',
   component: Login,
   meta: {
     title: 'Login',
     icon: 'menu',
     hiden: true,
   },
-},
-
-{
+}, {
   path: '/home',
+  name: 'gatewaystatus',
   component: Layout,
   meta: {
     title: '网关状态',
@@ -44,6 +44,7 @@ const routes = [{
 },
 {
   path: '/device',
+  name: 'DeviceManage',
   component: Layout,
   meta: {
     title: '设备管理',
@@ -66,6 +67,7 @@ const routes = [{
 },
 {
   path: '/user',
+  name: 'UserManage',
   component: Layout,
   meta: {
     title: '用户管理',
@@ -88,6 +90,7 @@ const routes = [{
 },
 {
   path: '/network',
+  name: 'NetworkManage',
   component: Layout,
   meta: {
     title: '网络管理',
@@ -108,7 +111,8 @@ const routes = [{
     },
   ],
 }, {
-  path: '/plugin',
+  name: 'plugin1Manage',
+  path: '/plugin1',
   component: Layout,
   meta: {
     title: '协议插件管理',
@@ -135,6 +139,7 @@ const routes = [{
 
 }, {
   path: '/audit',
+  name: 'auditmanage',
   component: Layout,
   meta: {
     title: '审计日志',
@@ -156,6 +161,7 @@ const routes = [{
   ],
 }, {
   path: '/setting',
+  name: 'settingsss',
   component: Layout,
   meta: {
     title: '设置',
@@ -175,6 +181,37 @@ const routes = [{
       },
     },
   ],
+},
+{
+  path: '/attr',
+  name: 'userattr',
+  component: Layout,
+  meta: {
+    title: '用户信息',
+    icon: 'menu',
+    hiden: true,
+  },
+  children: [
+    {
+      path: '',
+      // component: () => import('@/views/About.vue'),
+      component: () => import(/* webpackChunkName: "about" */
+        '@/views/UserInfo.vue'
+      ),
+      meta: {
+        title: '',
+        icon: 'menu',
+      },
+    },
+  ],
+},
+{
+  path: '/404',
+  component: () => import('@/views/404.vue'),
+  meta: {
+    hiden: true,
+  },
+
 },
 
 ];

@@ -4,16 +4,16 @@
     <el-container style="height: 100%; border: 1px solid #eee">
 
       <el-menu class="el-menu-vertical-demo"
-               @open="handleOpen"
-               @close="handleClose"
                :collapse="isCollapse"
-               background-color="#545c64"
-               text-color="#fff"
+               :background-color="variables.menuBg"
+               :text-color="variables.menuText"
                :default-active="activeIndex"
-               active-text-color="#ffd04b"
-               :collapse-transition=true>
+               :active-text-color="variables.menuActiveText"
+               :collapse-transition=true
+               unique-opened
+               router>
 
-        <el-menu-item index="0"
+        <el-menu-item index="/home-logo"
                       class="logo-div"
                       style="padding-left:5px;">
           <el-avatar :src="circleUrl"
@@ -23,28 +23,26 @@
                 class="logo-slot"><b>SIASECGATEWAY</b></span>
         </el-menu-item>
 
-        <div v-for="item in routes"
-             :key="item.path"
-             class="siderbar-menu">
-          <sub-menu v-if="item.meta.hiden!=true && item.children && item.children.length > 1 "
-                    :item="item"
-                    :base-path="item.path"
-                    :key="item.path" />
-          <menu-item v-else-if="item.meta.hiden!=true"
-                     :path="item.path"
-                     :title="item.meta.title"
-                     :icon="item.meta.icon"
-                     :key="item.path" />
-        </div>
+        <template v-for="item in routes">
+          <SiderbarSubMenu v-if="item.meta.hiden!=true
+              && item.children && item.children.length > 1 "
+                           :item="item"
+                           :base-path="item.path"
+                           :key="item.path" />
+          <SiderbarMenuItem v-else-if="item.meta.hiden!=true"
+                            :path="item.path"
+                            :title="item.meta.title"
+                            :icon="item.meta.icon"
+                            :key="item.path" />
+        </template>
 
       </el-menu>
 
       <el-container>
-        <el-header>
-
+        <el-header style="border-bottom: 1px solid #D9DEE4;">
           <el-row :gutter="10">
             <el-col :span="1">
-              <div class="grid-content bg-purple">
+              <div class="">
                 <div style="padding: 0 3px; width:60px;"
                      class="toggle-icon"
                      @click="toggleClick">
@@ -53,10 +51,10 @@
 
               </div>
             </el-col>
-            <el-col :span="1"
-                    :offset="21">
-              <div class="grid-content bg-purple">
-                <Navbar />
+            <el-col :span="2"
+                    :offset="20">
+              <div class="right-menu">
+                <Navbar userName="loginUser.email" />
               </div>
             </el-col>
           </el-row>
@@ -74,9 +72,10 @@
 
 <script>
 import path from 'path';
+import variables from '@/styles/variables.scss';
 import AppMain from './components/AppMain.vue';
-import SubMenu from './components/SubMenu.vue';
-import MenuItem from './components/MenuItem.vue';
+import SiderbarSubMenu from './components/SiderbarSubMenu.vue';
+import SiderbarMenuItem from './components/SiderbarMenuItem.vue';
 import Navbar from './components/Navbar.vue';
 
 export default {
@@ -86,18 +85,27 @@ export default {
       isCollapse: false,
       isActive: true,
       activeIndex: '/',
+      loginUser: {},
     };
   },
   computed: {
     routes() {
       return this.$router.options.routes;
     },
+    variables() {
+      return variables;
+    },
   },
   components: {
     AppMain,
     Navbar,
-    SubMenu,
-    MenuItem,
+    SiderbarSubMenu,
+    SiderbarMenuItem,
+  },
+  created() {
+    this.$api.auth.getLoginUser().then((res) => {
+      this.loginUser = res.data;
+    });
   },
 
   methods: {
@@ -117,10 +125,12 @@ export default {
   },
 };
 </script>
-<style >
+<style lang="scss" scoped>
+@import '~@/styles/variables.scss';
+
 .el-header {
-  background-color: #b3c0d1;
-  color: #333;
+  background-color: #{$navBarBg};
+  color: #73879c;
   line-height: 56px;
   vertical-align: middle;
 }
@@ -129,7 +139,7 @@ export default {
   margin-bottom: 20px;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
+  width: 210px;
   min-height: 400px;
 }
 .logo-slot {
@@ -151,5 +161,11 @@ export default {
 }
 .toggle-icon > i:hover {
   cursor: pointer;
+}
+/* .right-menu {
+  background-color: #{$navBarBg};
+} */
+.app-container {
+  background-color: #f7f7f7;
 }
 </style>

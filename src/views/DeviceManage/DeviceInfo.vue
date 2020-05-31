@@ -1,100 +1,50 @@
 <template>
-  <div>
-    <el-dialog :title="devInfoDialogTitle"
-               :visible.sync="devInfoDialogVisible">
-      <el-form :model="devInfo">
-        <el-form-item label="活动名称"
-                      :label-width="formLabelWidth">
-          <el-input v-model="devInfo.name"
-                    autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="活动区域"
-                      :label-width="formLabelWidth">
-          <el-select v-model="devInfo.type"
-                     placeholder="请选择活动区域">
-            <el-option label="区域一"
-                       value="shanghai"></el-option>
-            <el-option label="区域二"
-                       value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <div slot="footer"
-           class="dialog-footer">
-        <el-button @click="devInfoDialogVisible = false">取 消</el-button>
-        <el-button type="primary"
-                   @click="devInfoDialogVisible = false">确 定</el-button>
-      </div>
-    </el-dialog>
-
+  <div class="hmi-tabs">
+    <el-tabs v-model="activeName"
+             @tab-click="handleClick">
+      <el-tab-pane label="设备属性"
+                   name="first">设备属性</el-tab-pane>
+      <el-tab-pane label="设备状态"
+                   name="second">
+        <TabDevStatus />
+      </el-tab-pane>
+      <el-tab-pane label="审计"
+                   name="third">审计</el-tab-pane>
+      <el-tab-pane label="云边协同"
+                   name="fourth">云边协同</el-tab-pane>
+    </el-tabs>
+    {{devToken}}
   </div>
 </template>
 <script>
+import TabDevStatus from './TabDevStatus.vue';
+
 export default {
+  name: 'devInfo',
   data() {
     return {
-      devInfoDialogVisible: false,
-      devInfoDialogTitle: '新增设备',
-      formLabelWidth: '120px',
-      query: '',
-      devInfo: {
-        date: '',
-        name: '',
-        type: '',
-        label: '',
-        desc: '',
-      },
-
-      tableData: [{
-        date: '2016-05-02 24:03:35',
-        name: '王小虎',
-        type: 'PLC',
-        label: 'label',
-        desc: 'desc',
-        address: '上海市普陀区金沙江路 1518 弄',
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        type: 'PLC',
-        label: 'label',
-        desc: 'desc',
-        address: '上海市普陀区金沙江路 1516 弄',
-      }],
+      activeName: 'second',
     };
   },
-  methods: {
+  components: {
+    TabDevStatus,
+  },
 
-    handleEdit(index, row) {
-      window.console.log(index, row);
-      this.devInfoDialogTitle = '编辑设备';
-      this.devInfoDialogVisible = true;
+  props: {
+    devToken: {
+      type: String,
+      default: '',
     },
-    handleDelete(index, row) {
-      window.console.log(index, row);
-    },
-    handleHMI(index, row) {
-      window.console.log(index);
-      window.console.log(row.date);
+  },
+  methods: {
+    handleClick(tab, event) {
+      window.console.log(tab, event);
     },
   },
 };
 </script>
 <style scoped>
-.text {
-  font-size: 14px;
-}
-
-.item {
-  margin-bottom: 18px;
-}
-
-.clearfix {
-  display: table;
-  content: '';
-  line-height: 5px;
-}
-
-.box-card {
-  width: 100%;
+.hmi-tabs {
+  margin-top: -30px;
 }
 </style>

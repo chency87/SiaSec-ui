@@ -5,13 +5,23 @@ import axios from './http';
 
 const auth = {
   login(params) {
-    return axios.post(`${base.sq}/api/auth/login`, params);
+    return axios.post(`${base.dev}/api/auth/login`, params);
+  },
+  getLoginUser() {
+    return axios.get(`${base.dev}/api/auth/user`);
   },
 };
 const device = {
   types() {
-    return axios.get(`${base.sq}/api/device/types`);
+    return axios.get(`${base.dev}/api/device/types`);
   },
+  // GET /api/tenant/devices{?type,textSearch,idOffset,textOffset,limit}
+
+  getTenantDevices(params) {
+    return axios.get(`${base.dev}/api/tenant/devices`, { params });
+  },
+
+
 };
 
 export default {

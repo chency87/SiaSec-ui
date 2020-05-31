@@ -8,8 +8,9 @@ const instance = axios.create({ timeout: 1000 * 12 });
 // 设置post请求头
 // instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-instance.defaults.headers.post['Content-Type'] = 'application/json';
-instance.defaults.headers.put['Content-Type'] = 'application/json';
+instance.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
+instance.defaults.headers.put['Content-Type'] = 'application/json;charset=UTF-8';
+instance.defaults.headers.get['Content-Type'] = 'application/json;charset=UTF-8';
 
 
 // axios.defaults.timeout = 5000;
@@ -30,7 +31,7 @@ instance.interceptors.request.use((config) => {
     conf.data = JSON.stringify(config.data);
   }
   if (token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
-    conf.headers.authorization = token;
+    // conf.headers.authorization = token;
     conf.headers['X-Authorization'] = token;
   }
   return conf;

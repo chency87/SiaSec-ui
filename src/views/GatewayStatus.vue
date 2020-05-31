@@ -1,74 +1,74 @@
 <template>
   <div class="about">
+    <PhysicalStatus />
 
-    <!-- Form -->
-    <el-button type="text"
-               @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button>
-
-    <el-dialog title="收货地址"
-               :visible.sync="dialogFormVisible">
-      <el-form :model="form">
-        <el-form-item label="活动名称"
-                      :label-width="formLabelWidth">
-          <el-input v-model="form.name"
-                    autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="活动区域"
-                      :label-width="formLabelWidth">
-          <el-select v-model="form.region"
-                     placeholder="请选择活动区域">
-            <el-option label="区域一"
-                       value="shanghai"></el-option>
-            <el-option label="区域二"
-                       value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <div slot="footer"
-           class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary"
-                   @click="dialogFormVisible = false">确 定</el-button>
-      </div>
-    </el-dialog>
-
+    <div id="main"
+         style="width: 600px;height:400px;"></div>
   </div>
 </template>
 <script>
+
+// 引入基本模板
+
+// import echarts from 'echarts';
+import PhysicalStatus from './GatewayStatus/PhysicalStatus.vue';
+
+const echarts = require('echarts/lib/echarts');
+require('echarts/lib/chart/bar');
+require('echarts/lib/component/tooltip');
+require('echarts/lib/component/toolbox');
+require('echarts/lib/component/legend');
+require('echarts/lib/component/markLine');
+
 export default {
   data() {
     return {
-      gridData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄',
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄',
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄',
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄',
-      }],
-      dialogTableVisible: false,
-      dialogFormVisible: false,
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: '',
-      },
-      formLabelWidth: '120px',
+      size: '',
     };
+  },
+  components: {
+    PhysicalStatus,
+  },
+  mounted() {
+    const myChart = echarts.init(document.getElementById('main'));
+    const option = {
+      color: ['#f44'],
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow',
+        },
+      },
+      xAxis: [
+        {
+          type: 'category',
+          data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+          axisTick: {
+            alignWithLabel: true,
+          },
+        },
+      ],
+      yAxis: [
+        {
+          type: 'value',
+        },
+      ],
+      series: [
+        {
+          name: '每月花费',
+          type: 'bar',
+          barWidth: '60%',
+          data: [995, 666, 444, 858, 654, 236, 645, 546, 846, 225, 547, 356],
+        },
+      ],
+    };
+    myChart.setOption(option);
+
+    // 建议加上以下这一行代码，不加的效果图如下（当浏览器窗口缩小的时候）。超过了div的界限（红色边框）
+    window.addEventListener('resize', () => { myChart.resize(); });
   },
 };
 </script>
+
+<style scoped>
+</style>

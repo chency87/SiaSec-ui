@@ -14,6 +14,7 @@
         <el-form-item label="Email： ">
           <el-input v-model="loginForm.username"
                     placeholder="请输入Email"
+                    prefix-icon="el-icon-user-solid"
                     auto-complete="on"></el-input>
         </el-form-item>
 
@@ -21,6 +22,7 @@
           <el-input v-model="loginForm.password"
                     type="password"
                     placeholder="请输入密码"
+                    prefix-icon="el-icon-bank-card"
                     auto-complete="on"></el-input>
         </el-form-item>
 
@@ -49,7 +51,7 @@ export default {
     return {
       labelPosition: 'right',
       loginForm: {
-        username: 'tenant@thingsboard.com',
+        username: 'tenant@thingsboard.org',
         password: 'tenant',
       },
     };
